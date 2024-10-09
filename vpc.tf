@@ -7,32 +7,32 @@ resource "aws_vpc" "crm-vpc" {
   }
 }
 #web subnet
-resource "aws_subnet" "cmr-web-subnet" {
+resource "aws_subnet" "crm-web-subnet" {
   vpc_id     = aws_vpc.crm-vpc.id
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "cmr-web-subnet"
+    Name = "crm-web-subnet"
   }
 }
 #api subnet
-resource "aws_subnet" "cmr-api-subnet" {
+resource "aws_subnet" "crm-api-subnet" {
   vpc_id     = aws_vpc.crm-vpc.id
   cidr_block = "10.0.2.0/24"
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "cmr-api-subnet"
+    Name = "crm-api-subnet"
   }
 }
 #db subnet
-resource "aws_subnet" "cmr-db-subnet" {
+resource "aws_subnet" "crm-db-subnet" {
   vpc_id     = aws_vpc.crm-vpc.id
   cidr_block = "10.0.3.0/24"
 
   tags = {
-    Name = "cmr-db-subnet"
+    Name = "crm-db-subnet"
   }
 }
 #internet gateway
@@ -73,7 +73,7 @@ resource "aws_route_table" "crm-private-rt" {
 #crm web public association 
 
 resource "aws_route_table_association" "crm-web-asc" {
-  subnet_id      = aws_subnet.cmr-web-subnet.id
+  subnet_id      = aws_subnet.crm-web-subnet.id
   route_table_id = aws_route_table.crm-public-rt.id
 }
 
@@ -81,7 +81,7 @@ resource "aws_route_table_association" "crm-web-asc" {
 #crm  api public association 
 
 resource "aws_route_table_association" "crm-api-asc" {
-  subnet_id      = aws_subnet.cmr-api-subnet.id
+  subnet_id      = aws_subnet.crm-api-subnet.id
   route_table_id = aws_route_table.crm-public-rt.id
 }
 
@@ -89,7 +89,7 @@ resource "aws_route_table_association" "crm-api-asc" {
 # crm private association 
 
 resource "aws_route_table_association" "crm-db-asc" {
-  subnet_id      = aws_subnet.cmr-db-subnet.id
+  subnet_id      = aws_subnet.crm-db-subnet.id
   route_table_id = aws_route_table.crm-private-rt.id
 }
 
@@ -181,21 +181,21 @@ resource "aws_network_acl" "crm-db-nacl" {
 
 resource "aws_network_acl_association" "crm-web-nacl-asc" {
   network_acl_id = aws_network_acl.crm-web-nacl.id
-  subnet_id      = aws_subnet.cmr-web-subnet.id
+  subnet_id      = aws_subnet.crm-web-subnet.id
 }
 
 #crm api nacl association
 
 resource "aws_network_acl_association" "crm-api-nacl-asc" {
   network_acl_id = aws_network_acl.crm-api-nacl.id
-  subnet_id      = aws_subnet.cmr-api-subnet.id
+  subnet_id      = aws_subnet.crm-api-subnet.id
 }
 
 #crm db nacl association
 
 resource "aws_network_acl_association" "crm-db-nacl-asc" {
   network_acl_id = aws_network_acl.crm-db-nacl.id
-  subnet_id      = aws_subnet.cmr-db-subnet.id
+  subnet_id      = aws_subnet.crm-db-subnet.id
 }
 
 # crm web security group
