@@ -221,7 +221,7 @@ resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-ssh" {
 }
 
 
-resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-ssh" {
+resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-http" {
   security_group_id = aws_security_group.crm-web-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
