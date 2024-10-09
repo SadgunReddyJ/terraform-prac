@@ -66,6 +66,6 @@ resource "aws_route_table" "crm-private-rt" {
   vpc_id = aws_vpc.crm-vpc.id
 
   tags = {
-    Name = "crm-pubprivatelic-route"
+    Name = "crm-private-route"
   }
 }
