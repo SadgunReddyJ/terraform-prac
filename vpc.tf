@@ -69,3 +69,26 @@ resource "aws_route_table" "crm-private-rt" {
     Name = "crm-private-route"
   }
 }
+
+#crm web public association 
+
+resource "aws_route_table_association" "crm-web-asc" {
+  subnet_id      = aws_subnet.cmr-web-subnet.id
+  route_table_id = aws_route_table.crm-public-rt.id
+}
+
+
+#crm  api public association 
+
+resource "aws_route_table_association" "crm-api-asc" {
+  subnet_id      = aws_subnet.cmr-api-subnet.id
+  route_table_id = aws_route_table.crm-public-rt.id
+}
+
+
+# crm private association 
+
+resource "aws_route_table_association" "crm-db-asc" {
+  subnet_id      = aws_subnet.cmr-db-subnet.id
+  route_table_id = aws_route_table.crm-private-rt.id
+}
