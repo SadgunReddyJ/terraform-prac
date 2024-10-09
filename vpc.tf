@@ -197,3 +197,42 @@ resource "aws_network_acl_association" "crm-db-nacl-asc" {
   network_acl_id = aws_network_acl.crm-db-nacl.id
   subnet_id      = aws_subnet.cmr-db-subnet.id
 }
+
+# crm web security group
+
+resource "aws_security_group" "crm-web-sg" {
+  name        = "crm-web-sg"
+  description = "Allow SSH & HTTP traffic"
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "crm-web-sg"
+  }
+}
+
+# crm web security group ingress 
+
+resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-ssh" {
+  security_group_id = aws_security_group.crm-web-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+
+
+resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-ssh" {
+  security_group_id = aws_security_group.crm-web-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+# crm web security group egress
+
+resource "aws_vpc_security_group_egress_rule" "crm-web-sg-egress" {
+  security_group_id = aws_security_group.crm-web-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
